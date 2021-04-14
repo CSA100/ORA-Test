@@ -36,21 +36,25 @@
       };
 
       const renderData = async () => {
-        var slips = await fetchData();
+        try {
+          var slips = await fetchData();
 
-        // map over array of slips and create table rows accordingly
-        for (let i = 0; i < slips.length; i++) {
-          var trTag = document.createElement("TR");
-          var dateTag = document.createElement("TD");
-          var adviceTag = document.createElement("TD");
+          // map over array of slips and create table rows accordingly
+          for (let i = 0; i < slips.length; i++) {
+            var trTag = document.createElement("TR");
+            var dateTag = document.createElement("TD");
+            var adviceTag = document.createElement("TD");
 
-          dateTag.textContent = slips[i].date;
-          adviceTag.textContent = slips[i].advice;
+            dateTag.textContent = slips[i].date;
+            adviceTag.textContent = slips[i].advice;
 
-          trTag.appendChild(dateTag);
-          trTag.appendChild(adviceTag);
+            trTag.appendChild(dateTag);
+            trTag.appendChild(adviceTag);
 
-          document.querySelector("tbody").appendChild(trTag);
+            document.querySelector("tbody").appendChild(trTag);
+          }
+        } catch (err) {
+          alert(err.message);
         }
       };
 
