@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Api Call</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- bootstrap css -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Table of Advice</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Advice</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script>
+      const fetchData = async () => {
+        // fetch raw data
+        const data = await fetch(
+          "https://api.adviceslip.com/advice/search/life"
+        );
+        // parse body and return array of slips
+        const rawData = await data.json();
+        return rawData.slips;
+      };
+
+      const renderData = async () => {
+        var slips = await fetchData();
+
+        // map over array of slips and create table rows accordingly
+        for (let i = 0; i < slips.length; i++) {
+          var trTag = document.createElement("TR");
+          var dateTag = document.createElement("TD");
+          var adviceTag = document.createElement("TD");
+
+          dateTag.textContent = slips[i].date;
+          adviceTag.textContent = slips[i].advice;
+
+          trTag.appendChild(dateTag);
+          trTag.appendChild(adviceTag);
+
+          document.querySelector("tbody").appendChild(trTag);
+        }
+      };
+
+      renderData();
+    </script>
+  </body>
+</html>
